@@ -1,0 +1,758 @@
+print ("Hello, World!")
+
+-- In StarterGui -> ScreenGui einfügen
+local replicatedStorage = game:GetService("ReplicatedStorage")
+local players = game:GetService("Players")
+local dragSpeed = 0.95 -- Geschwindigkeit für das Dragging
+
+-- GUI-Erstellung
+local screenGui = Instance.new("ScreenGui")
+screenGui.Name = "Script_666s"
+screenGui.ResetOnSpawn = false
+screenGui.Parent = players.LocalPlayer:WaitForChild("PlayerGui")
+
+-- Hauptrahmen
+local mainFrame = Instance.new("Frame")
+mainFrame.Size = UDim2.new(0.6, 0, 0.6, 0)
+mainFrame.Position = UDim2.new(0.5, 0, 0.5, 0)
+mainFrame.BackgroundColor3 = Color3.new(0, 0, 0.3) -- Schwarz mit ein bissl Blau
+mainFrame.BorderColor3 = Color3.new(0.3, 0.6, 1)
+mainFrame.AnchorPoint = Vector2.new(0.5, 0.5)
+mainFrame.Parent = screenGui
+mainFrame.ClipsDescendants = false -- Verhindert Clipping
+mainFrame.Draggable = true -- Ermöglicht Dragging
+mainFrame.Active = true
+
+-- GUI-Name
+local titleLabel = Instance.new("TextLabel")
+titleLabel.Text = "Script_666s"
+titleLabel.Size = UDim2.new(0.3, 0, 0.1, 0)
+titleLabel.Position = UDim2.new(0.05, 0, 0.05, 0)
+titleLabel.TextColor3 = Color3.new(1, 1, 1) -- Weiß
+titleLabel.BackgroundTransparency = 1
+titleLabel.Font = Enum.Font.SourceSansBold
+titleLabel.TextSize = 24
+titleLabel.Parent = mainFrame
+
+-- Avatar-Anzeige
+local avatarImage = Instance.new("ImageLabel")
+avatarImage.Size = UDim2.new(0.9, 0, 0.6, 0)
+avatarImage.Position = UDim2.new(0.05, 0, 0.2, 0)
+avatarImage.Image = "rbxassetid://125559892451185"
+avatarImage.BackgroundTransparency = 1
+avatarImage.Parent = mainFrame
+
+-- Neuer RE/Reset Button
+local resetButton = Instance.new("TextButton")
+resetButton.Name = "REReset"
+resetButton.Size = UDim2.new(0.2, 0, 0.1, 0)
+resetButton.Position = UDim2.new(0.75, 10, 0.75, 0) -- Rechts von Walkspeed mit Abstand
+resetButton.BackgroundColor3 = Color3.new(0.6, 0, 0) -- Rot
+resetButton.BorderColor3 = Color3.new(0.8, 0.2, 0.2)
+resetButton.TextColor3 = Color3.new(1, 1, 1)
+resetButton.Text = "RE/Reset"
+resetButton.Font = Enum.Font.SourceSans
+resetButton.TextSize = 18
+resetButton.Parent = mainFrame
+resetButton.MouseButton1Click:Connect(function()
+    local character = players.LocalPlayer.Character or players.LocalPlayer.CharacterAdded:Wait()
+    if character and character:FindFirstChild("Humanoid") then
+        character.Humanoid.Health = 0
+    end
+end)
+-- Play Theme Button
+local playButton = Instance.new("TextButton")
+playButton.Name = "PlayTheme"
+playButton.Size = UDim2.new(0.2, 0, 0.1, 0)
+playButton.Position = UDim2.new(0.05, 0, 0.75, 0) -- Position verschoben
+playButton.BackgroundColor3 = Color3.new(0, 0, 0.3) -- Dunkelblau
+playButton.BorderColor3 = Color3.new(0.3, 0.6, 1) -- Hell-/Dunkelblauer Rand
+playButton.TextColor3 = Color3.new(1, 1, 1)
+playButton.Text = "Play Theme"
+playButton.Font = Enum.Font.SourceSans
+playButton.TextSize = 18
+playButton.Parent = mainFrame
+
+-- Sound speichern, um ihn zu überprüfen
+local currentSound = nil
+
+playButton.MouseButton1Click:Connect(function()
+    -- Überprüfen, ob die Musik bereits läuft
+    if currentSound and currentSound.IsPlaying then
+        currentSound:Stop() -- Stoppt die laufende Musik
+    end
+    
+    -- Musik abspielen
+    currentSound = Instance.new("Sound")
+    currentSound.SoundId = "rbxassetid://15689453529"  -- Die Musik-ID
+    currentSound.Volume = 1  -- Lautstärke auf 1 setzen
+    currentSound.Parent = game.Players.LocalPlayer.Character
+    currentSound:Play()
+    currentSound.Pitch = 0.9
+	   	currentSound.Volume		= 9999999999999
+end)
+-- Thomas Button (neuer Button)
+local thomasButton = Instance.new("TextButton")
+thomasButton.Name = "Thomas"
+thomasButton.Size = UDim2.new(0.2, 0, 0.1, 0)
+thomasButton.Position = UDim2.new(0.05, 0, 0.65, 0) -- Position über dem Play Button mit Abstand
+thomasButton.BackgroundColor3 = playButton.BackgroundColor3
+thomasButton.BorderColor3 = playButton.BorderColor3
+thomasButton.TextColor3 = playButton.TextColor3
+thomasButton.Text = "Thomas"
+thomasButton.Font = Enum.Font.SourceSans
+thomasButton.TextSize = 18
+thomasButton.Parent = mainFrame
+thomasButton.MouseButton1Click:Connect(function()
+    -- loadstring für Thomas ausführen
+    loadstring(game:HttpGet("https://rawscripts.net/raw/Prison-Life-Thomas-The-Dank-Engine-18940"))()
+end)
+-- Stop Music Button
+local stopButton = Instance.new("TextButton")
+stopButton.Name = "StopMusic"
+stopButton.Size = UDim2.new(0.2, 0, 0.1, 0)
+stopButton.Position = UDim2.new(0.3, 0, 0.75, 0) -- Position verschoben
+stopButton.BackgroundColor3 = playButton.BackgroundColor3
+stopButton.BorderColor3 = playButton.BorderColor3
+stopButton.TextColor3 = playButton.TextColor3
+stopButton.Text = "Stop Theme"
+stopButton.Font = Enum.Font.SourceSans
+stopButton.TextSize = 18
+stopButton.Parent = mainFrame
+stopButton.MouseButton1Click:Connect(function()
+    -- Lokale Musik stoppen
+    if currentSound then
+        currentSound:Stop()
+    end
+end)
+
+-- Shotgun Button (neuer Button)
+local shotgunButton = Instance.new("TextButton")
+shotgunButton.Name = "Shotgun"
+shotgunButton.Size = UDim2.new(0.2, 0, 0.1, 0)
+shotgunButton.Position = UDim2.new(0.3, 0, 0.65, 0) -- Position über dem Stop Music Button mit Abstand
+shotgunButton.BackgroundColor3 = playButton.BackgroundColor3
+shotgunButton.BorderColor3 = playButton.BorderColor3
+shotgunButton.TextColor3 = playButton.TextColor3
+shotgunButton.Text = "LaserGun"
+shotgunButton.Font = Enum.Font.SourceSans
+shotgunButton.TextSize = 18
+shotgunButton.Parent = mainFrame
+shotgunButton.MouseButton1Click:Connect(function()
+    -- loadstring für Shotgun ausführen
+    loadstring(game:HttpGet("https://pastebin.com/raw/Z8Hgsy6H"))()
+end)
+
+-- Walkspeed Button
+local speedButton = Instance.new("TextButton")
+speedButton.Name = "Walkspeed"
+speedButton.Size = UDim2.new(0.2, 0, 0.1, 0)
+speedButton.Position = UDim2.new(0.55, 0, 0.75, 0) -- Position verschoben
+speedButton.BackgroundColor3 = playButton.BackgroundColor3
+speedButton.BorderColor3 = playButton.BorderColor3
+speedButton.TextColor3 = playButton.TextColor3
+speedButton.Text = "Walkspeed"
+speedButton.Font = Enum.Font.SourceSans
+speedButton.TextSize = 18
+speedButton.Parent = mainFrame
+speedButton.MouseButton1Click:Connect(function()
+    local character = players.LocalPlayer.Character or players.LocalPlayer.CharacterAdded:Wait()
+    if character and character:FindFirstChild("Humanoid") then
+        character.Humanoid.WalkSpeed = 100
+    end
+end)
+
+-- Shutdown Button
+local shutdownButton = Instance.new("TextButton")
+shutdownButton.Name = "Shutdown"
+shutdownButton.Size = UDim2.new(0.2, 0, 0.1, 0)
+shutdownButton.Position = UDim2.new(0.55, 0, 0.65, 0) -- Position über dem Walkspeed Button
+shutdownButton.BackgroundColor3 = playButton.BackgroundColor3  -- Gleiche Hintergrundfarbe wie der Play Button
+shutdownButton.BorderColor3 = playButton.BorderColor3  -- Gleiche Randfarbe wie der Play Button
+shutdownButton.TextColor3 = playButton.TextColor3  -- Gleiche Textfarbe wie der Play Button
+shutdownButton.Text = "Shutdown"
+shutdownButton.Font = Enum.Font.SourceSans
+shutdownButton.TextSize = 18
+shutdownButton.Parent = mainFrame
+
+shutdownButton.MouseButton1Click:Connect(function()
+    for _, player in pairs(players:GetPlayers()) do
+        player:Kick("fak u motherfakers, the game is faked by w000mkidd😈")
+    end
+end) -- Farben anpassen
+local buttonBackgroundColor = thomasButton.BackgroundColor3
+local buttonBorderColor = thomasButton.BorderColor3
+local buttonTextColor = thomasButton.TextColor3
+
+-- Reset-Button Farbe anpassen
+resetButton.BackgroundColor3 = buttonBackgroundColor
+resetButton.BorderColor3 = buttonBorderColor
+resetButton.TextColor3 = buttonTextColor
+-- Farben und Styling vom Thomas Button übernehmen
+local buttonBackgroundColor = thomasButton.BackgroundColor3
+local buttonBorderColor = thomasButton.BorderColor3
+local buttonTextColor = thomasButton.TextColor3
+
+-- Soon! Buttons stapeln und anpassen
+local soonButtonStartY = 0.65 -- Start-Position Y
+local soonButtonSpacing = 0.12 -- Abstand zwischen den Buttons
+local soonButtonCount = 10 -- Anzahl der Buttons
+
+-- Text für "made by 5x5x5x50s"
+local creditLabel = Instance.new("TextLabel")
+creditLabel.Text = "made by 5x5x5x50s!   version:1.2"
+creditLabel.Size = UDim2.new(0.3, 0, 0.1, 0)
+creditLabel.Position = UDim2.new(0.05, 0, 0.9, 0)  -- Unten und zentriert
+creditLabel.TextColor3 = Color3.new(1, 1, 1) -- Weiß
+creditLabel.BackgroundTransparency = 1
+creditLabel.Font = Enum.Font.SourceSans
+creditLabel.TextSize = 16
+creditLabel.Parent = mainFrame
+-- Dragging Funktionalität
+local UIS = game:GetService("UserInputService")
+local dragToggle, dragStart, startPos
+
+mainFrame.InputBegan:Connect(function(input)
+    if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch then
+        dragToggle = true
+        dragStart = input.Position
+        startPos = mainFrame.Position
+    end
+end)
+
+mainFrame.InputChanged:Connect(function(input)
+    if dragToggle and input.UserInputType == Enum.UserInputType.MouseMovement or input.UserInputType == Enum.UserInputType.Touch then
+        local delta = input.Position - dragStart
+        mainFrame.Position = UDim2.new(
+            startPos.X.Scale,
+            startPos.X.Offset + (delta.X * dragSpeed),
+            startPos.Y.Scale,
+            startPos.Y.Offset + (delta.Y * dragSpeed)
+        )
+    end
+end)
+
+UIS.InputEnded:Connect(function(input)
+    if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch then
+        dragToggle = false
+    end
+end) -- 666 Button anpassen
+local e666 = Instance.new("TextButton")
+e666.Name = "e666"
+e666.Parent = mainFrame
+e666.BackgroundColor3 = buttonBackgroundColor -- Gleiche Hintergrundfarbe wie bei anderen Buttons
+e666.BorderColor3 = buttonBorderColor -- Gleiche Randfarbe wie bei anderen Buttons
+e666.TextColor3 = buttonTextColor -- Gleiche Textfarbe wie bei anderen Buttons
+e666.Size = UDim2.new(0.2, 0, 0.1, 0) -- Gleiche Größe wie bei anderen Buttons
+e666.Position = UDim2.new(0.3, 0, 0.55, 0) -- Position direkt über dem Shotgun Button
+e666.Font = Enum.Font.SourceSans
+e666.Text = "666"
+e666.TextSize = 18
+e666.TextScaled = true
+e666.TextWrapped = true
+e666.Parent = mainFrame
+
+    -- ForceField Button
+local forceFieldButton = Instance.new("TextButton")
+forceFieldButton.Name = "ForceField"
+forceFieldButton.Size = thomasButton.Size  -- Gleiche Größe wie der Thomas Button
+forceFieldButton.Position = UDim2.new(0.05, 0, 0.55, 0)  -- Direkt über dem Thomas Button
+forceFieldButton.BackgroundColor3 = thomasButton.BackgroundColor3  -- Gleiche Hintergrundfarbe wie der Thomas Button
+forceFieldButton.BorderColor3 = thomasButton.BorderColor3  -- Gleiche Randfarbe wie der Thomas Button
+forceFieldButton.TextColor3 = thomasButton.TextColor3  -- Gleiche Textfarbe wie der Thomas Button
+forceFieldButton.Text = "ForceField"
+forceFieldButton.Font = Enum.Font.SourceSans
+forceFieldButton.TextSize = 18
+forceFieldButton.Parent = mainFrame
+
+-- Night Button (angepasst)
+local DayToNight = Instance.new("TextButton")
+DayToNight.Name = "DayToNight"
+DayToNight.Parent = mainFrame
+DayToNight.BackgroundColor3 = shutdownButton.BackgroundColor3  -- Gleiche Hintergrundfarbe wie der Shutdown Button
+DayToNight.BorderColor3 = shutdownButton.BorderColor3  -- Gleiche Randfarbe wie der Shutdown Button
+DayToNight.TextColor3 = shutdownButton.TextColor3  -- Gleiche Textfarbe wie der Shutdown Button
+DayToNight.Text = "Night"
+DayToNight.Font = Enum.Font.SourceSans
+DayToNight.TextSize = 18
+DayToNight.Size = UDim2.new(0.2, 0, 0.1, 0)  -- Gleiche Größe wie die anderen Knöpfe
+DayToNight.Position = UDim2.new(0.55, 0, 0.55, 0)  -- Direkt über dem Shutdown Button
+DayToNight.Parent = mainFrame
+
+-- Funktion für den Night Button
+DayToNight.MouseButton1Down:connect(function()
+    while true do
+        print("Loop cycle start")
+        game.Lighting.TimeOfDay = "19:00:00"  -- Zeit auf 18:00 Uhr setzen
+        wait(0.5)  -- Wartezeit von 0.5 Sekunden zwischen den Änderungen
+    end
+end)
+-- Disco Button
+local discoButton = Instance.new("TextButton")
+discoButton.Name = "Disco"
+discoButton.Size = UDim2.new(0.2, 0, 0.1, 0)  -- Gleiche Größe wie der 666 Button
+discoButton.Position = UDim2.new(0.3, 0, 0.45, 0)  -- Direkt über dem 666 Button
+discoButton.BackgroundColor3 = e666.BackgroundColor3  -- Gleiche Hintergrundfarbe wie der 666 Button
+discoButton.BorderColor3 = e666.BorderColor3  -- Gleiche Randfarbe wie der 666 Button
+discoButton.TextColor3 = e666.TextColor3  -- Gleiche Textfarbe wie der 666 Button
+discoButton.Text = "Disco"
+discoButton.Font = Enum.Font.SourceSans
+discoButton.TextSize = 18
+discoButton.Parent = mainFrame
+
+-- Disco Funktion
+discoButton.MouseButton1Down:Connect(function()
+    while true do
+        game.Lighting.Ambient = Color3.new(math.random(), math.random(), math.random())
+        wait(0.25)
+    end
+end)
+-- w000mkiddMessage Button
+local w000mkiddMessage = Instance.new("TextButton")
+w000mkiddMessage.Name = "Script_666sMessage"
+w000mkiddMessage.Parent = mainFrame
+w000mkiddMessage.Size = forceFieldButton.Size  -- Gleiche Größe wie ForceField Button
+w000mkiddMessage.Position = UDim2.new(forceFieldButton.Position.X.Scale, 0, forceFieldButton.Position.Y.Scale - 0.1, 0) -- Direkt über ForceField Button
+w000mkiddMessage.BackgroundColor3 = forceFieldButton.BackgroundColor3 -- Gleiche Hintergrundfarbe wie ForceField Button
+w000mkiddMessage.BorderColor3 = forceFieldButton.BorderColor3 -- Gleiche Randfarbe wie ForceField Button
+w000mkiddMessage.TextColor3 = forceFieldButton.TextColor3 -- Gleiche Textfarbe wie ForceField Button
+w000mkiddMessage.Font = forceFieldButton.Font
+w000mkiddMessage.TextSize = forceFieldButton.TextSize
+w000mkiddMessage.Text = "Script_666s Message"
+w000mkiddMessage.TextScaled = true
+w000mkiddMessage.TextWrapped = true
+
+
+-- w000mkiddLaugh Button
+local laughButton = Instance.new("TextButton")
+laughButton.Name = "w000mkiddLaugh"
+laughButton.Size = UDim2.new(0.2, 0, 0.1, 0) -- Gleiche Größe wie andere Buttons
+laughButton.Position = UDim2.new(0.55, 0, 0.45, 0) -- Direkt über dem Night Button (anpassen der Y-Position)
+laughButton.BackgroundColor3 = DayToNight.BackgroundColor3 -- Gleiche Hintergrundfarbe wie der Night Button
+laughButton.BorderColor3 = DayToNight.BorderColor3 -- Gleiche Randfarbe wie der Night Button
+laughButton.TextColor3 = DayToNight.TextColor3 -- Gleiche Textfarbe wie der Night Button
+laughButton.Text = "script_666s XD"
+laughButton.Font = Enum.Font.SourceSans
+laughButton.TextSize = forceFieldButton.TextSize
+laughButton.Parent = mainFrame
+
+-- Funktion für den w000mkiddLaugh Button
+laughButton.MouseButton1Click:Connect(function()
+    
+    msg = Instance.new ("Hint")
+msg.Parent = game.Workspace
+msg.Text = "game gets hacked by team w000mkidd LMFAO LOL XD"
+    local s = Instance.new("Sound")
+    s.Name = "Sound"
+    s.SoundId = "http://www.roblox.com/asset/?id=119915323318123"
+    s.Volume = 9
+    s.Pitch = 0.9
+    s.Looped = true
+    s.Parent = game.Workspace
+    s:Play()
+end) -- GLIOS Knopf
+local gliosButton = Instance.new("TextButton")
+gliosButton.Name = "GLIOS"
+gliosButton.Size = UDim2.new(0.2, 0, 0.1, 0) -- Gleiche Größe wie andere Knöpfe
+gliosButton.Position = UDim2.new(0.05, 0, 0.35, 0) -- Direkt über dem w000mkidd Message Knopf
+gliosButton.BackgroundColor3 = Color3.new(0, 0, 0.3) -- Gleiche Farbe wie andere Knöpfe
+gliosButton.BorderColor3 = Color3.new(0.3, 0.6, 1) -- Gleiche Randfarbe wie andere Knöpfe
+gliosButton.TextColor3 = Color3.new(1, 1, 1) -- Weiße Textfarbe
+gliosButton.Text = "GLIOS"
+gliosButton.Font = Enum.Font.SourceSans
+gliosButton.TextSize = 18
+gliosButton.Parent = mainFrame
+
+-- Funktionalität des GLIOS Knopfs
+gliosButton.MouseButton1Click:Connect(function()
+    -- Loadstring ausführen
+    loadstring(game:HttpGet("https://gist.githubusercontent.com/urmom583/e767969b7e98a5ffd4986689240cd1dc/raw/beec58e6db7e21c1cfa041904a46ee876dc68d92/GLIOS"))()
+end) -- Name Button (neuer Button)
+local nameButton = Instance.new("TextButton")
+nameButton.Name = "Name"
+nameButton.Size = UDim2.new(0.2, 0, 0.1, 0) -- Gleiche Größe wie die anderen Buttons
+nameButton.Position = UDim2.new(0.3, 0, 0.35, 0) -- Direkt über dem Disco-Button (angepasst)
+nameButton.BackgroundColor3 = thomasButton.BackgroundColor3 -- Gleiche Hintergrundfarbe
+nameButton.BorderColor3 = thomasButton.BorderColor3 -- Gleiche Randfarbe
+nameButton.TextColor3 = thomasButton.TextColor3 -- Gleiche Textfarbe
+nameButton.Text = "Change Name"
+nameButton.Font = Enum.Font.SourceSans
+nameButton.TextSize = 18
+nameButton.ZIndex = 2 -- Höher als der Disco-Button
+nameButton.Parent = mainFrame
+
+-- Funktionalität für den Name-Button
+nameButton.MouseButton1Click:Connect(function()
+    local FakeName = "God"
+    local plr = game.Players.LocalPlayer
+    plr.DisplayName = FakeName
+    plr.Name = FakeName
+end) 
+local skyboxButton = Instance.new("TextButton")
+skyboxButton.Size = UDim2.new(0.2, 0, 0.1, 0)
+skyboxButton.Position = UDim2.new(0.75, 10, 0.65, 0) -- Position rechts
+skyboxButton.BackgroundColor3 = Color3.new(0, 0, 0.3) -- Dunkel Blau
+skyboxButton.BorderColor3 = Color3.new(0.3, 0.6, 1) -- Dunkel Blau mit bissl Hell blau
+skyboxButton.TextColor3 = Color3.new(1, 1, 1) -- Weißer Text
+skyboxButton.Text = "SKYBOX"
+skyboxButton.Parent = mainFrame
+--w000mkidd partikel knopf (BROKEN)
+local particleButton = Instance.new("TextButton")
+particleButton.Size = UDim2.new(0.2, 0, 0.1, 0)
+particleButton.Position = UDim2.new(0.75, 10, 0.55, 0) -- Position rechts
+particleButton.BackgroundColor3 = Color3.new(0, 0, 0.3) -- Dunkel Blau
+particleButton.BorderColor3 = Color3.new(0.3, 0.6, 1) -- Dunkel Blau mit bissl Hell blau
+particleButton.TextColor3 = Color3.new(1, 1, 1) -- Weißer Text
+particleButton.Text = "SKYBOX3"
+particleButton.Parent = mainFrame
+--ISHOWSPEED SKYBOX
+local skybox2Button = Instance.new("TextButton")
+skybox2Button.Size = UDim2.new(0.2, 0, 0.1, 0)
+skybox2Button.Position = UDim2.new(0.75, 10, 0.45, 0) -- Position rechts
+skybox2Button.BackgroundColor3 = Color3.new(0, 0, 0.3) -- Dunkel Blau
+skybox2Button.BorderColor3 = Color3.new(0.3, 0.6, 1) -- Dunkel Blau mit bissl Hell blau
+skybox2Button.TextColor3 = Color3.new(1, 1, 1) -- Weißer Text
+skybox2Button.Text = "SKYBOX2"
+skybox2Button.Parent = mainFrame
+-- Neuer Button: BillboardGui erstellen
+local billboardButton = Instance.new("TextButton")
+billboardButton.Name = "BillboardButton"
+billboardButton.Size = UDim2.new(0.2, 0, 0.1, 0) -- Gleiche Größe wie andere Buttons
+billboardButton.Position = UDim2.new(0.55, 0, 0.35, 0) -- Direkt über dem "w000mkidd XD" Button
+billboardButton.BackgroundColor3 = thomasButton.BackgroundColor3 -- Gleiche Hintergrundfarbe wie andere Buttons
+billboardButton.BorderColor3 = thomasButton.BorderColor3 -- Gleiche Randfarbe wie andere Buttons
+billboardButton.TextColor3 = thomasButton.TextColor3 -- Gleiche Textfarbe wie andere Buttons
+billboardButton.Text = "BillboardGui"
+billboardButton.Font = Enum.Font.SourceSans
+billboardButton.TextSize = 18
+billboardButton.Parent = mainFrame
+
+-- Funktionalität für den BillboardGui-Button
+billboardButton.MouseButton1Click:Connect(function()
+    local player = players.LocalPlayer
+    local character = player.Character or player.CharacterAdded:Wait()
+    local head = character:FindFirstChild("Head")
+    
+    if head then
+        local billboardGui = Instance.new("BillboardGui")
+        billboardGui.Name = "script_666sBillboard"
+        billboardGui.Adornee = head
+        billboardGui.Size = UDim2.new(5, 0, 5, 0)
+        billboardGui.StudsOffset = Vector3.new(0, 2, 0) -- Position über dem Kopf
+        billboardGui.AlwaysOnTop = true
+        billboardGui.Parent = head
+        
+        local textLabel = Instance.new("TextLabel")
+        textLabel.Size = UDim2.new(1, 0, 1, 0)
+        textLabel.BackgroundTransparency = 1
+        textLabel.TextColor3 = Color3.fromRGB(50, 150, 255) -- Hellblau
+        textLabel.Font = Enum.Font.SourceSansBold
+        textLabel.TextScaled = true
+        textLabel.Text = "Script_666s"
+        textLabel.Parent = billboardGui
+    end
+end)
+    
+-- Funktionalität für den 666 Button
+e666.MouseButton1Down:connect(function()
+    
+    msg = Instance.new ("Hint")
+msg.Parent = game.Workspace
+msg.Text = "HAHAHA Join team script_666s🍗🔥"
+for i,v in next,workspace:children''do
+if(v:IsA'BasePart')then
+me=v;
+bbg=Instance.new('BillboardGui',me);
+bbg.Name='stuf';
+bbg.Adornee=me;
+bbg.Size=UDim2.new(2.5,0,2.5,0)
+--bbg.StudsOffset=Vector3.new(0,2,0)
+tlb=Instance.new'TextLabel';
+tlb.Text='666 666 666 666 666 666';
+tlb.Font='SourceSansBold';
+tlb.FontSize='Size48';
+tlb.TextColor3=Color3.new(0,0,139);
+tlb.Size=UDim2.new(1.25,0,1.25,0);
+tlb.Position=UDim2.new(-0.125,-22,-1.1,0);
+tlb.BackgroundTransparency=1;
+tlb.Parent=bbg;
+end;end;
+function xds(dd)
+for i,v in next,dd:children''do
+if(v:IsA'BasePart')then
+v.BrickColor=BrickColor.new'Really black';
+v.TopSurface='Smooth';
+v.BottomSurface='Smooth';
+s=Instance.new('SelectionBox',v);
+s.Adornee=v;
+s.Color=BrickColor.new'Dark blue';
+a=Instance.new('PointLight',v);
+a.Color=Color3.new(0,0,139);
+a.Range=15;
+a.Brightness=5;
+f=Instance.new('Fire',v);
+f.Size=19;
+f.Heat=22;
+end;
+game.Lighting.TimeOfDay=0;
+game.Lighting.Brightness=0;
+game.Lighting.ShadowColor=Color3.new(0,0,0);
+game.Lighting.Ambient=Color3.new(1,0,0);
+game.Lighting.FogEnd=200;
+game.Lighting.FogColor=Color3.new(0,0,0);
+local dec = 'http://www.roblox.com/asset/?id=125559892451185';
+local fac = {'Front', 'Back', 'Left', 'Right', 'Top', 'Bottom'}
+--coroutine.wrap(function()
+--for ,_ in pairs(fac) do
+--local ddec = Instance.new("Decal", v)
+--ddec.Face =
+--ddec.Texture = dec
+--end end)()
+if #(v:GetChildren())>0 then
+xds(v)
+end
+end
+end
+xds(game.Workspace)
+end)
+-- Funktionalität für den Button
+w000mkiddMessage.MouseButton1Down:connect(function()
+
+while true do
+wait(5)--set this to how much time between messages
+msg = Instance.new ("Hint")
+msg.Parent = game.Workspace
+msg.Text = "Script_666s: MUHAWHAWHAW! NOOBS! I HAVE RETURNED TO FAK THIS GAME UP!"
+wait(6)
+msg:remove()
+wait(3)
+msg = Instance.new("Message")
+msg.Parent = game.Workspace
+msg.Text = "Script_666s: HAHAAHAHHA YALL SO FAKING DUMB"
+wait(6)
+msg:remove()
+wait(3)
+msg = Instance.new("Message")
+msg.Parent = game.Workspace
+msg.Text = "script_666s: I WILL DESTROY YOU ALL!"
+wait(6)
+msg:remove()
+wait(3)
+msg = Instance.new("Message")
+msg.Parent = game.Workspace
+msg.Text = "script_666s: YOU WILL NOT LIVE THROUGH MY DEADLY SPEARS"
+wait(6)
+msg:remove()
+wait(3)
+msg = Instance.new("Message")
+msg.Parent = game.Workspace
+msg.Text = "script_666s: I MIGHT AS WELL CLONE YOU INTO MONKEYS LIKE ISHOWMEAT"
+wait(6)
+msg:remove()
+wait(3)
+msg = Instance.new("Message")
+msg.Parent = game.Workspace
+msg.Text = "script_666s THEN THOSE NIGGAS WILL DESTROY THIS FAKING GAME! HAHAHA!"
+wait(6)
+msg:remove()
+wait(3)
+msg = Instance.new("Message")
+msg.Parent = game.Workspace
+msg.Text = "script_666s: YOU CAN'T STOP ME! YOUR A WEAK BITCH!"
+wait(6)
+msg:remove()
+end
+end)
+
+forceFieldButton.MouseButton1Click:Connect(function()
+ 
+-- Gui to Lua
+-- Version: 3.
+-- Instances:
+ 
+local ForceFieldGUI = Instance.new("ScreenGui")
+local ForceFieldGUI_2 = Instance.new("TextButton")
+local ForceFieldOFF = Instance.new("TextButton")
+local ForceFieldON = Instance.new("TextButton")
+ 
+--Properties:
+ 
+ForceFieldGUI.Name = "ForceFieldGUI"
+ForceFieldGUI.Parent = game.Players.LocalPlayer:WaitForChild("PlayerGui")
+ 
+ForceFieldGUI_2.Name = "ForceFieldGUI"
+ForceFieldGUI_2.Parent = ForceFieldGUI
+ForceFieldGUI_2.BackgroundColor3 = Color3.fromRGB(0, 255, 255)
+ForceFieldGUI_2.BackgroundTransparency = 0.300
+ForceFieldGUI_2.BorderColor3 = Color3.fromRGB(245, 244, 247)
+ForceFieldGUI_2.BorderSizePixel = 0
+ForceFieldGUI_2.Position = UDim2.new(0, 0, 0, 240)
+ForceFieldGUI_2.Size = UDim2.new(0, 100, 0, 20)
+ForceFieldGUI_2.Text = "ForceField"
+ForceFieldGUI_2.TextColor3 = Color3.fromRGB(17, 17, 17)
+ForceFieldGUI_2.TextTransparency = 0.300
+ 
+ForceFieldOFF.Name = "ForceFieldOFF"
+ForceFieldOFF.Parent = ForceFieldGUI
+ForceFieldOFF.BackgroundColor3 = Color3.fromRGB(253, 253, 253)
+ForceFieldOFF.BackgroundTransparency = 0.300
+ForceFieldOFF.BorderColor3 = Color3.fromRGB(245, 244, 247)
+ForceFieldOFF.BorderSizePixel = 0
+ForceFieldOFF.Position = UDim2.new(0, 0, 0, 280)
+ForceFieldOFF.Size = UDim2.new(0, 100, 0, 20)
+ForceFieldOFF.Visible = false
+ForceFieldOFF.Text = "Off"
+ForceFieldOFF.TextColor3 = Color3.fromRGB(17, 17, 17)
+ 
+ForceFieldON.Name = "ForceFieldON"
+ForceFieldON.Parent = ForceFieldGUI
+ForceFieldON.BackgroundColor3 = Color3.fromRGB(253, 253, 253)
+ForceFieldON.BackgroundTransparency = 0.300
+ForceFieldON.BorderColor3 = Color3.fromRGB(245, 244, 247)
+ForceFieldON.BorderSizePixel = 0
+ForceFieldON.Position = UDim2.new(0, 0, 0, 260)
+ForceFieldON.Size = UDim2.new(0, 100, 0, 20)
+ForceFieldON.Visible = false
+ForceFieldON.Text = "On"
+ForceFieldON.TextColor3 = Color3.fromRGB(17, 17, 17)
+    --Script--
+    local function DVAWVL_fake_script() -- ForceFieldGUI_2.Script
+local script = Instance.new('Script', ForceFieldGUI_2)
+ 
+function onClicked(GUI)
+h = script.Parent.Parent.Parent.Parent.Character:findFirstChild("Humanoid")
+if (h ~= nil) then
+script.Parent.Parent.ForceFieldOFF.Visible = true
+script.Parent.Parent.ForceFieldON.Visible = true
+else return end
+end
+script.Parent.MouseButton1Click:connect(onClicked)
+end
+coroutine.wrap(DVAWVL_fake_script)()
+local function HYECSMJ_fake_script() -- ForceFieldOFF.Script
+local script = Instance.new('Script', ForceFieldOFF)
+ 
+function onClicked(GUI)
+f = script.Parent.Parent.Parent.Parent.Character:findFirstChild("ForceField")
+if (f ~= nil) then
+f:remove()
+else return end
+end
+script.Parent.MouseButton1Click:connect(onClicked)
+end
+coroutine.wrap(HYECSMJ_fake_script)()
+local function LOYRXPU_fake_script() -- ForceFieldOFF.Script
+local script = Instance.new('Script', ForceFieldOFF)
+ 
+function onClicked(GUI)
+h = script.Parent.Parent.Parent.Parent.Character:findFirstChild("Humanoid")
+if (h ~= nil) then
+script.Parent.Parent.ForceFieldOFF.Visible = false
+script.Parent.Parent.ForceFieldON.Visible = false
+else return end
+end
+script.Parent.MouseButton1Click:connect(onClicked)
+end
+coroutine.wrap(LOYRXPU_fake_script)()
+local function PFEVNBW_fake_script() -- ForceFieldON.Script
+local script = Instance.new('Script', ForceFieldON)
+ 
+function onClicked(GUI)
+h = script.Parent.Parent.Parent.Parent.Character:findFirstChild("Humanoid")
+if (h ~= nil) then
+FF = Instance.new("ForceField")
+FF.Parent = script.Parent.Parent.Parent.Parent.Character
+else return end
+end
+script.Parent.MouseButton1Click:connect(onClicked)
+end
+coroutine.wrap(PFEVNBW_fake_script)()
+local function FNHQ_fake_script() -- ForceFieldON.Script
+local script = Instance.new('Script', ForceFieldON)
+ 
+function onClicked(GUI)
+h = script.Parent.Parent.Parent.Parent.Character:findFirstChild("Humanoid")
+if (h ~= nil) then
+script.Parent.Parent.ForceFieldOFF.Visible = false
+script.Parent.Parent.ForceFieldON.Visible = false
+else return end
+end
+script.Parent.MouseButton1Click:connect(onClicked)
+end
+coroutine.wrap(FNHQ_fake_script)()
+end)
+
+--ISHOWSPEED WITH RONALDO TEAM W000MKIDD JOIN TODAY! SKYBOX
+local function createSkybox()
+    local sky = Instance.new("Sky")
+    sky.Name = "script_666sSkybox"
+
+    sky.SkyboxBk = "rbxassetid://125559892451185"
+    sky.SkyboxDn = "rbxassetid://125559892451185"
+    sky.SkyboxFt = "rbxassetid://125559892451185"
+    sky.SkyboxLf = "rbxassetid://125559892451185"
+    sky.SkyboxRt = "rbxassetid://125559892451185"
+    sky.SkyboxUp = "rbxassetid://125559892451185"
+
+    sky.Parent = game.Lighting
+
+local m = Instance.new("Hint", game.workspace)
+		m.Text = "Join team script_666s today! "
+end
+skybox2Button.MouseButton1Click:Connect(createSkybox)
+
+--SKYBOX1 (classic w000mkidd skybox)
+local function createSkybox()
+    local sky = Instance.new("Sky")
+    sky.Name = "5x5x5x50sSkybox"
+
+    sky.SkyboxBk = "rbxassetid://99058346165627"
+    sky.SkyboxDn = "rbxassetid://99058346165627"
+    sky.SkyboxFt = "rbxassetid://99058346165627"
+    sky.SkyboxLf = "rbxassetid://99058346165627"
+    sky.SkyboxRt = "rbxassetid://99058346165627"
+    sky.SkyboxUp = "rbxassetid://99058346165627"
+
+    sky.Parent = game.Lighting
+end
+
+skyboxButton.MouseButton1Click:Connect(createSkybox)
+
+--PARTICLE EMITTER SCRIPT (broken) new one is SKYBOX3
+local function createSkybox()
+    local sky = Instance.new("Sky")
+    sky.Name = "5x5x5x50sSkybox"
+
+    sky.SkyboxBk = "rbxassetid://121482506517048"
+    sky.SkyboxDn = "rbxassetid://121482506517048"
+    sky.SkyboxFt = "rbxassetid://121482506517048"
+    sky.SkyboxLf = "rbxassetid://121482506517048"
+    sky.SkyboxRt = "rbxassetid://121482506517048"
+    sky.SkyboxUp = "rbxassetid://121482506517048"
+
+    -- Skybox zu Lighting hinzufügen
+    sky.Parent = game.Lighting
+end
+
+-- Funktion zum Abspielen des Songs
+local function playSound()
+    local sound = Instance.new("Sound")
+    sound.SoundId = "rbxassetid://86898097585942"
+    sound.Volume = 4
+    sound.Looped = true
+    sound.Parent = game.Workspace  -- Sound wird in Workspace abgespielt
+    sound:Play()
+end
+
+-- Event-Listener für SKYBOX3-Knopf
+particleButton.MouseButton1Click:Connect(function()
+    createSkybox()
+    playSound()
+end)
+
+for _, button in pairs(game:GetService("mainFrame"):GetDescendants()) do
+    if button:IsA("TextButton") then
+        button.BackgroundTransparency = 1 -- Macht den Button-Hintergrund unsichtbar
+        button.BorderSizePixel = 1  -- Entfernt den Rand
+    end
+end
