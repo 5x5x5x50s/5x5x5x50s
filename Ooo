@@ -177,7 +177,7 @@ shutdownButton.Parent = mainFrame
 
 shutdownButton.MouseButton1Click:Connect(function()
     for _, player in pairs(players:GetPlayers()) do
-        player:Kick("fak u motherfakers, the game is faked by w000mkidd😈")
+        player:Kick("banned all game by Script_666s😈")
     end
 end) -- Farben anpassen
 local buttonBackgroundColor = thomasButton.BackgroundColor3
@@ -325,7 +325,7 @@ w000mkiddMessage.TextWrapped = true
 
 -- w000mkiddLaugh Button
 local laughButton = Instance.new("TextButton")
-laughButton.Name = "w000mkiddLaugh"
+laughButton.Name = "Script_666sLaugh"
 laughButton.Size = UDim2.new(0.2, 0, 0.1, 0) -- Gleiche Größe wie andere Buttons
 laughButton.Position = UDim2.new(0.55, 0, 0.45, 0) -- Direkt über dem Night Button (anpassen der Y-Position)
 laughButton.BackgroundColor3 = DayToNight.BackgroundColor3 -- Gleiche Hintergrundfarbe wie der Night Button
@@ -336,17 +336,17 @@ laughButton.Font = Enum.Font.SourceSans
 laughButton.TextSize = forceFieldButton.TextSize
 laughButton.Parent = mainFrame
 
--- Funktion für den w000mkiddLaugh Button
+-- Funktion für den script_666s Button
 laughButton.MouseButton1Click:Connect(function()
     
     msg = Instance.new ("Hint")
 msg.Parent = game.Workspace
-msg.Text = "game gets hacked by team w000mkidd LMFAO LOL XD"
+msg.Text = "game gets hacked by team script_666 LMFAO LOL XD"
     local s = Instance.new("Sound")
     s.Name = "Sound"
-    s.SoundId = "http://www.roblox.com/asset/?id=119915323318123"
+    s.SoundId = "http://www.roblox.com/asset/?id=104181508980428"
     s.Volume = 9
-    s.Pitch = 0.9
+    s.Pitch = 0.2
     s.Looped = true
     s.Parent = game.Workspace
     s:Play()
